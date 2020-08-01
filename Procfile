@@ -1,2 +1,2 @@
-release: python main.py
-web: gunicorn MyRecipes.wsgi
+
+web: gunicorn main:app
