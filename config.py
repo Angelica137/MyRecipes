@@ -20,3 +20,6 @@ class Config:
 
     #CSRF
     WTF_CSRF_SECRET_KEY = environ.get('SECRET_KEY')
+
+
+
