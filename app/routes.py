@@ -40,6 +40,7 @@ def login():
 
 
 @application.route("/create_recipe", methods=["GET", "POST"])
+@csrf.exempt
 def create_recipe():
     form = RecipeCreate()
     return render_template("create_recipe.html", title="Create new recipe", form=form)
