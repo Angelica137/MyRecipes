@@ -1,6 +1,7 @@
 from flask import current_app as application
 from flask import render_template, request, json, Response
 from app.forms import SignUp, LoginForm, RecipeCreate
+from app import csrf
 
 
 @application.route("/")
