@@ -1,7 +1,9 @@
 from flask import current_app as application
-from flask import render_template, request, json, Response
+from flask import render_template, request, json, Response, redirect, flash
 from app.forms import SignUp, LoginForm, RecipeCreate
+from app.models import User, Recipe
 from app import csrf
+from app import db
 
 
 @application.route("/")
@@ -12,16 +14,16 @@ def index():
 
 @application.route("/sign_up", methods=["GET", "POST"])
 def sign_up():
-    form = SignUp()
-    if form.validate_on_submit():
-        email = form.email.data
-        password = form.password.data
+    form = SignUp(request.form)
+    if request.method == "POST" and form.validate():
+        user = User(form.user_id.data, form.name.data, form.email.data, form.password.data)
         if request.form.get("email") == "test@test.com":
             flash("Welcome aboard! 🥘", "success")
             return redirect("/index")
         else:
             flash("Sorry, something went wrong 😿", "danger")
     return render_template("sign_up.html", title="Sign up", form=form) 
+
 
 
 @application.route("/login", methods=["GET", "POST"])

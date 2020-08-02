@@ -1,12 +1,13 @@
 import flask
 from app import db
-frpm werkzeug.security import generate_apssword_hash, check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(db.Model):
-    user_id = db.Column(db.Integer unique=True)
-    name = db.Column(db.String max_length=50)
-    email = db.Column(db.String max_length=30, unique=True)
+    #__table_args__ = (PrimaryKeyConstraint(user_id))
+    user_id = db.Column(db.Integer, primary_key=True, unique=True)
+    name = db.Column(db.String(50))
+    email = db.Column(db.String(30), unique=True)
     password = db.Column(db.String)
 
     @classmethod
@@ -19,10 +20,10 @@ class User(db.Model):
 
 
 class Recipe(db.Model):
-    recipe_id = db.Column(db.Integer unique=True)
-    recipe_name = db.Column(db.String max_length=50)
-    recipe_description = db.Column(db.String max_length=30, unique=True)
-    ingredient = db.Column(db.String max_length=30, unique=True)
+    recipe_id = db.Column(db.Integer, primary_key=True, unique=True)
+    recipe_name = db.Column(db.String(50))
+    recipe_description = db.Column(db.String(30), unique=True)
+    ingredient = db.Column(db.String(30), unique=True)
 
     @classmethod
     def set_password(self, password):
