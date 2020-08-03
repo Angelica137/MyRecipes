@@ -4,7 +4,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(db.Model):
-    #__table_args__ = (PrimaryKeyConstraint(user_id))
     user_id = db.Column(db.Integer, primary_key=True, unique=True)
     name = db.Column(db.String(50))
     email = db.Column(db.String(30), unique=True)

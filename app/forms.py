@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import Form, StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, validators
 from wtforms.validators import DataRequired, Optional, Email, Length, EqualTo, ValidationError, email_validator
+from app.models import User, Recipe
 
 
 class LoginForm(FlaskForm):
@@ -20,7 +21,7 @@ class SignUp(FlaskForm):
         """
         verify email not in use already
         """
-        user = User.objects(email=email.data).first()
+        user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError("Email is already in use.")
 
