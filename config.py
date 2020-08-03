@@ -18,8 +18,7 @@ class Config:
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    #CSRF
-    
+    #CSRF    
     WTF_CSRF_SECRET_KEY = environ.get('SECRET_KEY')
 
 
