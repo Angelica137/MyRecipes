@@ -13,7 +13,7 @@ def create_app():
     application.config.from_object('config.Config')
     db.init_app(application)
     csrf.init_app(application)
-    migrate.init_app(application, db)
+    migrate.init_app(application)
 
     
     with application.app_context():
