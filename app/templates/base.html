@@ -19,6 +19,11 @@
   </head>
 </html>
 <body>
-  <div>iCook <a href="{{ url_for('index') }}">Home</a></div>
+  <div>
+    iCook
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('sign_up') }}">Sign up</a>
+  </div>
+
   {% block content %}{% endblock %}
 </body>
