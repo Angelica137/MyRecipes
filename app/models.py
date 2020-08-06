@@ -21,13 +21,5 @@ class User(db.Model):
 class Recipe(db.Model):
     recipe_id = db.Column(db.Integer, primary_key=True, unique=True)
     recipe_name = db.Column(db.String(50))
-    recipe_description = db.Column(db.String(30), unique=True)
+    recipe_description = db.Column(db.String)
     ingredient = db.Column(db.String(30), unique=True)
-
-    @classmethod
-    def set_password(self, password):
-        self.password = generate_password_hash(self.password, password)
-
-    @classmethod
-    def get_password(self, password):
-        return check_password_hash(self.password, password)

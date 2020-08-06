@@ -9,7 +9,7 @@ from app import db
 @application.route("/")
 @application.route("/index")
 def index():
-    return render_template("home.html")
+    return render_template("home.html", title="Welcome to iCook")
 
 
 @application.route("/sign_up", methods=["GET", "POST"])
