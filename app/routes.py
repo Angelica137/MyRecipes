@@ -33,7 +33,7 @@ def home():
 def sign_up():
     form = SignUpForm()
     if form.validate_on_submit():
-        flash('Welcome aboard {user.user_name}')
-        return redirect(url_for('index'))
+        flash('Welcome aboard {user.username}')
+        return redirect(url_for('home'))
     return render_template('sign_up.html', title='Join', form=form)
     
