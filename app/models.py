@@ -22,6 +22,10 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def own_recipes(self):
+        own_recipes = Recipe.query.filter_by(user_id=self.id)
+        return own_recipes.order_by(Recipe.recipe_name.asc())
+				
 
 @login.user_loader
 def load_user(id):
@@ -46,3 +50,4 @@ class Recipe(db.Model):
 
     def __repr__(self):
         return '<Recipe {}>'.format(self.body)
+

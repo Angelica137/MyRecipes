@@ -15,20 +15,7 @@ def index():
 @app.route('/home')
 @login_required
 def home():
-    recipes = [
-			{
-          'recipe': 'Fish Tacos',
-          'description': 'Delicious fish tacos from Tijuana',
-          'time': 25,
-          'calories': 400,
-			},
-			{			
-          'recipe': 'Chicken Katsu Curry',
-          'description': 'the best chicken katsu ever',
-          'time': 20,
-          'calories': 350,
-			}
-		]
+    recipes = current_user.own_recipes().all()
     return render_template('home.html', title='Home', recipes=recipes)
 
 
@@ -73,9 +60,9 @@ def logout():
 def add_recipe():
     form = RecipeForm()
     if form.validate_on_submit():
-        recipe = Recipe(recipe_name=form.recipe_name.data, description=form.description.data, cook_time=form.cook_time.data, start_day_before=form.start_day_before.data, lunchbox=form.lunchbox.data)
+        recipe = Recipe(recipe_name=form.recipe_name.data, description=form.description.data, cook_time=form.cook_time.data, start_day_before=form.start_day_before.data, lunchbox=form.lunchbox.data, author=current_user)
         db.session.add(recipe)
         db.session.commit()
-        flash('Your recipe has been sved')
+        flash('Your recipe has been saved')
         return redirect(url_for('home'))
     return render_template('add_recipe.html', title='Add your awesome recipe here', form=form)
