@@ -1,6 +1,7 @@
-from app import app
+from app import app, db
 from flask import render_template, flash, redirect, url_for
 from app.forms import SignUpForm
+from app.models import User
 
 
 @app.route('/')
@@ -31,9 +32,19 @@ def home():
 
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
+   # if current_user.is_authenticated:
+   #     return redirect(url_for('home'))
     form = SignUpForm()
     if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
         flash('Welcome aboard {user.username}')
         return redirect(url_for('home'))
     return render_template('sign_up.html', title='Join', form=form)
+    
+
+#@app.route('/login', methods=['GET', 'POST'])
+# def login():
     
