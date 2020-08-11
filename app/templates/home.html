@@ -8,4 +8,6 @@
     time: {{ recipe.time }}min {{recipe.calories}}cal
   </p>
 </div>
-{% endfor %} {% endblock %}
+{% endfor %}
+<button><a href="{{ url_for('add_recipe') }}">Add recipe</a></button>
+{% endblock %}

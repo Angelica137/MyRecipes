@@ -66,3 +66,7 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+
+@app.route('/add_recipe', methods=['GET', 'POST'])
+def add_recipe():
+    return "Add your delicious recipe"

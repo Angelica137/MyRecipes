@@ -25,3 +25,19 @@ class User(UserMixin, db.Model):
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+
+class Recipe(db.Model):
+    __tablename__ = 'recipes'
+
+    id = db.Colum(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), index=True)
+    description = db.Column(db.String)
+    time = db.Column(db.Integer)
+    meal = db.Column(db.String(64))
+    utensils = db.Column(db.String(150))
+    ingredients = db.Column(db.String(150))
+    instructions = db.Column(db.String)
+
+    def __repr__(self):
+        return '<Recipe {}>'.format(self.body)
