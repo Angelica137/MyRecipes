@@ -25,7 +25,7 @@ class LoginForm(FlaskForm):
 class RecipeForm(FlaskForm):
     recipe_name = StringField('Recipe name', validators=[DataRequired()])
     description = TextAreaField('Decription')
-    time = IntegerField('Cooking time')
+    cook_time = IntegerField('Cooking time')
     start_day_before = BooleanField('Start the day before serving')
     lunchbox = BooleanField('Lunchbox safe')
     submit = SubmitField('Add recipe')

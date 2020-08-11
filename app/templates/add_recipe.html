@@ -4,8 +4,8 @@
   {{ form.hidden_tag() }}
   <p>
     {{ form.recipe_name.label }}<br />
-    {{ form.recipe_name(size=150) }}<br />
-    {% for error in form.username.errors %}
+    {{ form.recipe_name(size=62) }}<br />
+    {% for error in form.recipe_name.errors %}
     <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
   </p>
@@ -14,8 +14,8 @@
     {{ form.description(cals=32, rows=4) }}<br />
   </p>
   <p>
-    {{ form.time.label }}<br />
-    {{ form.time }} mins.<br />
+    {{ form.cook_time.label }}<br />
+    {{ form.cook_time }} mins.<br />
   </p>
   <p>
     {{ form.start_day_before() }} {{ form.start_day_before.label }}

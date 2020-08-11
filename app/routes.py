@@ -1,7 +1,8 @@
 from app import app, db
 from flask import render_template, flash, redirect, url_for
-from app.forms import SignUpForm, LoginForm
-from app.models import User
+from app.forms import SignUpForm, LoginForm, RecipeForm
+from app.models import User, Recipe
+from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
 
 
@@ -68,5 +69,13 @@ def logout():
 
 
 @app.route('/add_recipe', methods=['GET', 'POST'])
+@login_required
 def add_recipe():
-    return "Add your delicious recipe"
+    form = RecipeForm()
+    if form.validate_on_submit():
+        recipe = Recipe(recipe_name=form.recipe_name.data, description=form.description.data, cook_time=form.cook_time.data, start_day_before=form.start_day_before.data, lunchbox=form.lunchbox.data)
+        db.session.add(recipe)
+        db.session.commit()
+        flash('Your recipe has been sved')
+        return redirect(url_for('home'))
+    return render_template('add_recipe.html', title='Add your awesome recipe here', form=form)

@@ -1,11 +1,11 @@
-from app import db
+from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from app import login
+from hashlib import md5
 
 
 class User(UserMixin, db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True)
@@ -31,7 +31,7 @@ def load_user(id):
 class Recipe(db.Model):
     __tablename__ = 'recipes'
 
-    id = db.Colum(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     recipe_name = db.Column(db.String(150), index=True)
     description = db.Column(db.String)
     servings = db.Column(db.Integer)
@@ -39,6 +39,8 @@ class Recipe(db.Model):
     #meal = db.Column(db.String(64)) add tags
     #utensils = db.Column(db.String(150))
     #ingredients = db.Column(db.String(150))
+    start_day_before = db.Column(db.Boolean, default=False)
+    lunchbox = db.Column(db.Boolean, default=False, index=True)
     instructions = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
