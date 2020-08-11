@@ -6,6 +6,11 @@ from app.forms import SignUpForm
 @app.route('/')
 @app.route('/index')
 def index():
+    return render_template('index.html', title='iCook')
+
+
+@app.route('/home')
+def home():
     user = {'user_name': 'Angelica'}
     recipes = [
 			{
@@ -21,7 +26,7 @@ def index():
           'calories': 350,
 			}
 		]
-    return render_template('index.html', title='Home', user=user, recipes=recipes)
+    return render_template('home.html', title='Home', user=user, recipes=recipes)
 
 
 @app.route('/sign_up', methods=['GET', 'POST'])
