@@ -3,9 +3,9 @@
 {% for recipe in recipes %}
 <div>
   <p>
-    {{ recipe.recipe }}<br />
+    {{ recipe.recipe_name }}<br />
     <b>{{ recipe.description }}</b><br />
-    time: {{ recipe.time }}min {{recipe.calories}}cal
+    time: {{ recipe.cook_time }}min {{ recipe.calories }}250 cal
   </p>
 </div>
 {% endfor %}
