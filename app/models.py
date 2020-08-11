@@ -32,7 +32,7 @@ class Recipe(db.Model):
     __tablename__ = 'recipes'
 
     id = db.Colum(db.Integer, primary_key=True)
-    name = db.Column(db.String(150), index=True)
+    recipe_name = db.Column(db.String(150), index=True)
     description = db.Column(db.String)
     servings = db.Column(db.Integer)
     cook_time = db.Column(db.Integer)

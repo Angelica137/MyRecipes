@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block content %}
+<h1>Add your delicious recipe here</h1>
+<form action="" method="post" novalidate>
+  {{ form.hidden_tag() }}
+  <p>
+    {{ form.recipe_name.label }}<br />
+    {{ form.recipe_name(size=150) }}<br />
+    {% for error in form.username.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    {{ form.description.label }}<br />
+    {{ form.description(cals=32, rows=4) }}<br />
+  </p>
+  <p>
+    {{ form.time.label }}<br />
+    {{ form.time }} mins.<br />
+  </p>
+  <p>
+    {{ form.start_day_before() }} {{ form.start_day_before.label }}
+  </p>
+  <p>
+    {{ form.lunchbox() }} {{ form.lunchbox.label }}
+  </p>
+  <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}
