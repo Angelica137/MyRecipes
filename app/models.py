@@ -11,6 +11,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(120))
+    recipes = db.relationship('Recipe', backref='author', lazy='dynamic')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -33,11 +34,13 @@ class Recipe(db.Model):
     id = db.Colum(db.Integer, primary_key=True)
     name = db.Column(db.String(150), index=True)
     description = db.Column(db.String)
-    time = db.Column(db.Integer)
-    meal = db.Column(db.String(64))
-    utensils = db.Column(db.String(150))
-    ingredients = db.Column(db.String(150))
+    servings = db.Column(db.Integer)
+    cook_time = db.Column(db.Integer)
+    #meal = db.Column(db.String(64)) add tags
+    #utensils = db.Column(db.String(150))
+    #ingredients = db.Column(db.String(150))
     instructions = db.Column(db.String)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<Recipe {}>'.format(self.body)
