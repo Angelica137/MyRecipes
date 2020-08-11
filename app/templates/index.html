@@ -1,11 +1,9 @@
 {% extends "base.html" %} {% block content %}
-<h1>Hi, {{ user.user_name }}</h1>
-{% for recipe in recipes %}
+<h1>Welcome to iCook</h1>
 <div>
-  <p>
-    {{ recipe.recipe }}<br />
-    <b>{{ recipe.description }}</b><br />
-    time: {{ recipe.time }}min {{recipe.calories}}cal
-  </p>
+  <h2>All your recipes in one place</h2>
+  <p>Save your recipes.</p>
+  <p>Build your meal plans</p>
+  <p>Create your shopping list</p>
 </div>
-{% endfor %} {% endblock %}
+{% endblock %}
