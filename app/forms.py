@@ -1,36 +1,34 @@
 from flask_wtf import FlaskForm
-from wtforms import Form, StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, validators
-from wtforms.validators import DataRequired, Optional, Email, Length, EqualTo, ValidationError, email_validator
+from wtforms import StringField, BooleanField, SubmitField, PasswordField, TextAreaField, IntegerField
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User, Recipe
 
 
-class LoginForm(FlaskForm):
-    email = StringField("Email", [DataRequired(), Email()])
-    password = StringField("Password", [DataRequired(), Length(min=6,max=15)])
-    submit = SubmitField("Login")
-
-
-class SignUp(FlaskForm):
-    name = StringField("Name", [DataRequired()])
-    email = StringField("Email", [DataRequired(), Email()])
-    password = StringField("Password", [DataRequired(), Length(min=6, max=15)])
-    confirm_password = StringField("Confirm password", [DataRequired(), Length(min=6, max=15), EqualTo("password")])
-    submit = SubmitField("Sign up")
+class SignUpForm(FlaskForm):
+    username = StringField('Name', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Sign up')
 
     def validate_email(self, email):
-        """
-        verify email not in use already
-        """
         user = User.query.filter_by(email=email.data).first()
-        if user:
-            raise ValidationError("Email is already in use.")
+        if user is not None:
+            raise ValidationError('It seems you already have an account. Please log in.')
 
 
-class RecipeCreate(FlaskForm):
-    recipe_name = StringField("Recipe name", [DataRequired()])
-    recipe_description = TextAreaField("Description", [Optional()])
-    servings = IntegerField("Servings", [DataRequired()])
-    submit = SubmitField("Save")
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Login')
 
-# "add" button for ingredients and cooking steps to
-# reveal a new input field
+
+class RecipeForm(FlaskForm):
+    recipe_name = StringField('Recipe name', validators=[DataRequired()])
+    description = TextAreaField('Decription')
+    cook_time = IntegerField('Cooking time')
+    servings = IntegerField('Number of servings')
+    start_day_before = BooleanField('Start the day before serving')
+    lunchbox = BooleanField('Lunchbox safe')
+    submit = SubmitField('Add recipe')
+
+    

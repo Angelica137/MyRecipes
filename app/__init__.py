@@ -1,26 +1,14 @@
 from flask import Flask
+from config import Config
 from flask_sqlalchemy import SQLAlchemy
-from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
+from flask_login import LoginManager
 
 
-csrf = CSRFProtect()
-db = SQLAlchemy()
-migrate = Migrate()
+app = Flask(__name__)
+app.config.from_object(Config)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+login = LoginManager(app)
 
-def create_app():
-    application = Flask(__name__)
-    application.config.from_object('config.Config')
-    db.init_app(application)
-    csrf.init_app(application)
-    migrate.init_app(application)
-
-    
-    with application.app_context():
-        from . import routes
-        db.create_all()
-        return application
-
-
-if __name__ == "__main__":
-    application.run()
+from app import routes, models

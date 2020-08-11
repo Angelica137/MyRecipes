@@ -8,26 +8,32 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>iCook</title>
+    {% if title %}
+    <title>{{ title }} - iCook</title>
+    {% else %}
+    <title>Welcome to iCook</title>
+    {% endif %}
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="" />
   </head>
-  <body>
-    <div>
-      👩‍🍳 iCook
-      <a href="/index">Home</a>
-      <a href="/login">Login</a>
-      <a href="/sign_up">Sign up</a>
-    </div>
-    <hr />
-    {% with messages = get_flashed_messages() %} {% if messages %}
-    <ul>
-      {% for message in messages %}
-      <li>{{ messages }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %} {% endwith %} {% block content %}{% endblock %}
-    <script src="" async defer></script>
-  </body>
 </html>
+<body>
+  <div>
+    iCook
+    <a href="{{ url_for('home') }}">Home</a>
+    {% if current_user.is_anonymous %}
+    <a href="{{ url_for('login') }}">Login</a>
+    <a href="{{ url_for('sign_up') }}">Sign up</a>
+    {% else %}
+    <a href="{{ url_for('logout') }}">Logout</a>
+    {% endif %}
+  </div>
+  {% with messages = get_flashed_messages() %} {% if messages %}
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %} {% endwith %} {% block content %}{% endblock %}
+</body>

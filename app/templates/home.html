@@ -1,6 +1,13 @@
 {% extends "base.html" %} {% block content %}
-<h1>{{ title }}</h1>
-<p>Discover and create amazing recipes</p>
-<h2>Create your fist recipe</h2>
-<a href="create_recipe"><button type="button">Add recipe</button></a>
+<h1>Hi, {{ current_user.username }}</h1>
+{% for recipe in recipes %}
+<div>
+  <p>
+    {{ recipe.recipe }}<br />
+    <b>{{ recipe.description }}</b><br />
+    time: {{ recipe.time }}min {{recipe.calories}}cal
+  </p>
+</div>
+{% endfor %}
+<button><a href="{{ url_for('add_recipe') }}">Add recipe</a></button>
 {% endblock %}
