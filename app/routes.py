@@ -14,7 +14,6 @@ def index():
 @app.route('/home')
 @login_required
 def home():
-    user = {'user_name': 'Angelica'}
     recipes = [
 			{
           'recipe': 'Fish Tacos',
@@ -29,7 +28,7 @@ def home():
           'calories': 350,
 			}
 		]
-    return render_template('home.html', title='Home', user=user, recipes=recipes)
+    return render_template('home.html', title='Home', recipes=recipes)
 
 
 @app.route('/sign_up', methods=['GET', 'POST'])
@@ -42,7 +41,7 @@ def sign_up():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Welcome aboard {user.username}')
+        flash('Welcome aboard {current_user.username}')
         return redirect(url_for('home'))
     return render_template('sign_up.html', title='Join', form=form)
     
