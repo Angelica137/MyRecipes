@@ -32,8 +32,8 @@ def home():
 
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
-   # if current_user.is_authenticated:
-   #     return redirect(url_for('home'))
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = SignUpForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
