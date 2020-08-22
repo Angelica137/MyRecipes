@@ -2,6 +2,8 @@
 
 This is a small webapp to parctice fullstak web development.
 
+Field enclosures to create repeated fields
+
 Set up and run App
 First create a virtual machine:
 
