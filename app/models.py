@@ -40,14 +40,58 @@ class Recipe(db.Model):
     description = db.Column(db.String)
     servings = db.Column(db.Integer)
     cook_time = db.Column(db.Integer)
-    #meal = db.Column(db.String(64)) add tags
+    #tags = List
     #utensils = db.Column(db.String(150))
+		#picture = image
     #ingredients = db.Column(db.String(150))
     start_day_before = db.Column(db.Boolean, default=False)
     lunchbox = db.Column(db.Boolean, default=False, index=True)
-    instructions = db.Column(db.String)
+    # instructions = List
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<Recipe {}>'.format(self.body)
 
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tag_name = db.Column(db.String(150), index=True, unique=True)
+    description = db.Column(db.String)
+
+
+class Utensil(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), unique=True)
+
+
+class Ingredient(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    #food = Food
+    #quantity = Quantity
+    # prep = Prep
+
+
+class Quantity(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    #vlue = float
+    #quantity_type = Quantity type
+
+
+class QuantityType(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), unique=True)
+
+
+class Food(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    food_name = db.Column(db.String(150), index=True, unique=True)
+    #macro = List
+    #micro = List
+    #picture = image
+
+
+
+# class MicroNutrition
+# class MicroNutriotionType
+# class MacroNutrition
+# class MacroNutritionType
