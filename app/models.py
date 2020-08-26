@@ -40,14 +40,14 @@ class Recipe(db.Model):
     description = db.Column(db.String)
     servings = db.Column(db.Integer)
     cook_time = db.Column(db.Integer)
-    #tags = List
-    #utensils = db.Column(db.String(150))
-		#picture = image
-    #ingredients = db.Column(db.String(150))
+    # tags = List
+    # utensils = db.Column(db.String(150))
+		# picture = image
+    # ingredients = list
     start_day_before = db.Column(db.Boolean, default=False)
     lunchbox = db.Column(db.Boolean, default=False, index=True)
     # instructions = List
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<Recipe {}>'.format(self.body)
@@ -66,14 +66,14 @@ class Utensil(db.Model):
 
 class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    #food = Food
-    #quantity = Quantity
+    # food = Food
+    # quantity = Quantity
     # prep = Prep
 
 
 class Quantity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    #vlue = float
+    #value = float
     #quantity_type = Quantity type
 
 
@@ -84,10 +84,18 @@ class QuantityType(db.Model):
 
 class Food(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    food_name = db.Column(db.String(150), index=True, unique=True)
+    name = db.Column(db.String(150), index=True, unique=True)
+    slug = db.Column(db.String(100), uniue=True)
     #macro = List
     #micro = List
     #picture = image
+
+    def __init__(self, *args, **kwargs):
+        super(Food, self).__init__(*args, **kwargs)
+        self.slug = slugify(self.name)
+
+    def __repr__(self):
+        return '<Tag %s>' % self.name
 
 
 
