@@ -34,8 +34,8 @@ def sign_up():
     return render_template('sign_up.html', title='Join', form=form)
 
 
-@app.route('/hello', methods=['GET', 'POST'])
-def hello():
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = LoginForm()

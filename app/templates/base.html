@@ -23,7 +23,7 @@
     iCook
     <a href="{{ url_for('home') }}">Home</a>
     {% if current_user.is_anonymous %}
-    <a href="{{ url_for('hello') }}">Login</a>
+    <a href="{{ url_for('login') }}">Login</a>
     <a href="{{ url_for('sign_up') }}">Sign up</a>
     {% else %}
     <a href="{{ url_for('logout') }}">Logout</a>
