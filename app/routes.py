@@ -32,10 +32,10 @@ def sign_up():
         flash('Welcome aboard {current_user.username}')
         return redirect(url_for('home'))
     return render_template('sign_up.html', title='Join', form=form)
-    
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+
+@app.route('/hello', methods=['GET', 'POST'])
+def hello():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = LoginForm()
