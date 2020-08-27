@@ -40,14 +40,66 @@ class Recipe(db.Model):
     description = db.Column(db.String)
     servings = db.Column(db.Integer)
     cook_time = db.Column(db.Integer)
-    #meal = db.Column(db.String(64)) add tags
-    #utensils = db.Column(db.String(150))
-    #ingredients = db.Column(db.String(150))
+    # tags = List
+    # utensils = db.Column(db.String(150))
+		# picture = image
+    # ingredients = list
     start_day_before = db.Column(db.Boolean, default=False)
     lunchbox = db.Column(db.Boolean, default=False, index=True)
-    instructions = db.Column(db.String)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # instructions = List
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<Recipe {}>'.format(self.body)
 
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tag_name = db.Column(db.String(150), index=True, unique=True)
+    description = db.Column(db.String)
+
+
+class Utensil(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), unique=True)
+
+
+class Ingredient(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    # food = Food
+    # quantity = Quantity
+    # prep = Prep
+
+
+class Quantity(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    #value = float
+    #quantity_type = Quantity type
+
+
+class QuantityType(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), unique=True)
+
+
+class Food(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), index=True, unique=True)
+    slug = db.Column(db.String(100), uniue=True)
+    #macro = List
+    #micro = List
+    #picture = image
+
+    def __init__(self, *args, **kwargs):
+        super(Food, self).__init__(*args, **kwargs)
+        self.slug = slugify(self.name)
+
+    def __repr__(self):
+        return '<Tag %s>' % self.name
+
+
+
+# class MicroNutrition
+# class MicroNutriotionType
+# class MacroNutrition
+# class MacroNutritionType
