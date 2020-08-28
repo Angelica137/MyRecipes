@@ -80,8 +80,14 @@ class Quantity(db.Model):
 
 
 class QuantityType(db.Model):
+    __tablename__ = 'quantity_type'
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), unique=True)
+
+    def __repr__(self):
+        return '<QuantityType {}>'.format(self.name)
+
 
 
 class Food(db.Model):
