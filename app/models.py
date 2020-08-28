@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from hashlib import md5
 
 
-def slugyfy(s):
+def slugify(s):
     return re.sub('[^\w]+', '-', s).lower()
 
 
@@ -29,7 +29,7 @@ class User(UserMixin, db.Model):
 
     def own_recipes(self):
         own_recipes = Recipe.query.filter_by(user_id=self.id)
-        return own_recipes.order_by(Recipe.recipe_name.asc())
+        return own_recipes.order_by(Recipe.name.asc())
 				
 
 @login.user_loader
@@ -41,7 +41,8 @@ class Recipe(db.Model):
     __tablename__ = 'recipes'
 
     id = db.Column(db.Integer, primary_key=True)
-    recipe_name = db.Column(db.String(150), index=True)
+    name = db.Column(db.String(150), index=True)
+    slug = db.Column(db.String(100), unique=True)
     description = db.Column(db.String)
     servings = db.Column(db.Integer)
     cook_time = db.Column(db.Integer)
@@ -52,8 +53,17 @@ class Recipe(db.Model):
     # instructions = List
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    def __init__(self, *args, **kwargs):
+        super(Recipe, self).__init__(*args, **kwargs)
+        self.generate_slug()
+
+    def generate_slug(self):
+        self.slug = ''
+        if self.name:
+            self.slug = slugify(self.name)
+
     def __repr__(self):
-        return '<Recipe {}>'.format(self.body)
+        return '<Recipe %s>' % self.title
 
 
 class Ingredient(db.Model):

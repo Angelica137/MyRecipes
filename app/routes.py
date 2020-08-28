@@ -60,7 +60,7 @@ def logout():
 def add_recipe():
     form = RecipeForm()
     if form.validate_on_submit():
-        recipe = Recipe(recipe_name=form.recipe_name.data, description=form.description.data, cook_time=form.cook_time.data, start_day_before=form.start_day_before.data, lunchbox=form.lunchbox.data, author=current_user)
+        recipe = Recipe(name=form.name.data, description=form.description.data, cook_time=form.cook_time.data, author=current_user)
         db.session.add(recipe)
         db.session.commit()
         flash('Your recipe has been saved')

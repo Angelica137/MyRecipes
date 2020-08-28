@@ -23,7 +23,7 @@ class LoginForm(FlaskForm):
 
 
 class RecipeForm(FlaskForm):
-    recipe_name = StringField('Recipe name', validators=[DataRequired()])
+    name = StringField('Recipe name', validators=[DataRequired()])
     description = TextAreaField('Decription')
     cook_time = IntegerField('Cooking time')
     servings = IntegerField('Number of servings')
