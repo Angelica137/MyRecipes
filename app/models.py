@@ -74,20 +74,23 @@ class Ingredient(db.Model):
 
 
 class Quantity(db.Model):
+    __tablename__ = 'quantity'
     id = db.Column(db.Integer, primary_key=True)
-    #value = float
-    #quantity_type = Quantity type
+    value = db.Column(db.Float)
+    quantity_type_id = db.Column(db.Integer, db.ForeignKey('quantity_type.id'))
+    quantity_type = db.relationship('QuantityType', foreign_keys=[quantity_type_id])
+    #quantity_type = db.relationship('QuantityType', backref=db.backref('quantity', lazy='dynamic'))
+    def __repr__(self):
+        return '<Quantity {}>'.format(self.quantity_type)
 
 
 class QuantityType(db.Model):
     __tablename__ = 'quantity_type'
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), unique=True)
 
     def __repr__(self):
         return '<QuantityType {}>'.format(self.name)
-
 
 
 class Food(db.Model):
