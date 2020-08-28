@@ -1,7 +1,12 @@
+import re
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from hashlib import md5
+
+
+def slugyfy(s):
+    return re.sub('[^\w]+', '-', s).lower()
 
 
 class User(UserMixin, db.Model):
@@ -44,24 +49,11 @@ class Recipe(db.Model):
     # utensils = db.Column(db.String(150))
 		# picture = image
     # ingredients = list
-    start_day_before = db.Column(db.Boolean, default=False)
-    lunchbox = db.Column(db.Boolean, default=False, index=True)
     # instructions = List
-    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<Recipe {}>'.format(self.body)
-
-
-class Tag(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    tag_name = db.Column(db.String(150), index=True, unique=True)
-    description = db.Column(db.String)
-
-
-class Utensil(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(150), unique=True)
 
 
 class Ingredient(db.Model):
@@ -85,7 +77,7 @@ class QuantityType(db.Model):
 class Food(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), index=True, unique=True)
-    slug = db.Column(db.String(100), uniue=True)
+    #slug = db.Column(db.String(100), unique=True)
     #macro = List
     #micro = List
     #picture = image
@@ -95,7 +87,7 @@ class Food(db.Model):
         self.slug = slugify(self.name)
 
     def __repr__(self):
-        return '<Tag %s>' % self.name
+        return '<Food {}>' % self.name
 
 
 
