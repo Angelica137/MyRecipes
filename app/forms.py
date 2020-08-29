@@ -27,8 +27,6 @@ class RecipeForm(FlaskForm):
     description = TextAreaField('Decription')
     cook_time = IntegerField('Cooking time')
     servings = IntegerField('Number of servings')
-    start_day_before = BooleanField('Start the day before serving')
-    lunchbox = BooleanField('Lunchbox safe')
     submit = SubmitField('Add recipe')
 
     
