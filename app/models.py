@@ -63,7 +63,7 @@ class Recipe(db.Model):
             self.slug = slugify(self.name)
 
     def __repr__(self):
-        return '<Recipe %s>' % self.title
+        return '<Recipe: %s>' % self.title
 
 
 class Ingredient(db.Model):
@@ -96,7 +96,7 @@ class QuantityType(db.Model):
 class Food(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), index=True, unique=True)
-    #slug = db.Column(db.String(100), unique=True)
+    slug = db.Column(db.String(100), unique=True)
     #macro = List
     #micro = List
     #picture = image
@@ -106,7 +106,7 @@ class Food(db.Model):
         self.slug = slugify(self.name)
 
     def __repr__(self):
-        return '<Food {}>' % self.name
+        return '<Food: %s>' % self.name
 
 
 
