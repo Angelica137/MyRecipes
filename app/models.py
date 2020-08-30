@@ -9,6 +9,9 @@ def slugify(s):
     return re.sub('[^\w]+', '-', s).lower()
 
 
+recipe_tags = db.Table('recipe_tags', db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')), db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id')))
+
+
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
 
@@ -71,6 +74,8 @@ class Ingredient(db.Model):
     food_id = db.Column(db.Integer, db.ForeignKey('food.id'))
     quantity_id = db.Column(db.Integer, db.ForeignKey('quantity.id'))
     # prep = Prep
+    def __repr__(self):
+        return '<Ingredient {}>'.format(self.ingredient_id)
 
 
 class Quantity(db.Model):
@@ -111,6 +116,18 @@ class Food(db.Model):
     def __repr__(self):
         return '<Food: %s>' % self.name
 
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    slug = db.Column(db.String(64), unique=True)
+
+    def __init__(self, *args, **kwargs):
+        super(Tag, self).__init__(*args, **kwargs)
+        self.slug = slugify(self.name)
+
+    def __repr__(self):
+        return '<Tag %s>' % self.name
 
 
 # class MicroNutrition
