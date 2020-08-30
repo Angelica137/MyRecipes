@@ -49,7 +49,7 @@ class Recipe(db.Model):
     description = db.Column(db.String)
     servings = db.Column(db.Integer)
     cook_time = db.Column(db.Integer)
-    # tags = List
+    tags = db.relationship('Tag', secondary=recipe_tags, backref=db.backref('recipes', lazy='dynamic'))
     # utensils = db.Column(db.String(150))
 		# picture = image
     # ingredients = list
