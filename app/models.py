@@ -68,8 +68,8 @@ class Recipe(db.Model):
 
 class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    # food = Food
-    # quantity = Quantity
+    food_id = db.Column(db.Integer, db.ForeignKey('food.id'))
+    quantity_id = db.Column(db.Integer, db.ForeignKey('quantity.id'))
     # prep = Prep
 
 
@@ -78,6 +78,7 @@ class Quantity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.Float)
     quantity_type_id = db.Column(db.Integer, db.ForeignKey('quantity_type.id'))
+    ingredient = db.relationship('Ingredient', backref='ingredient', lazy='dynamic')
     #quantity_type = db.relationship('QuantityType', foreign_keys=[quantity_type_id])
     #quantity_type = db.relationship('QuantityType', backref=db.backref('quantity', lazy='dynamic'))
     def __repr__(self):
@@ -98,6 +99,7 @@ class Food(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), index=True, unique=True)
     slug = db.Column(db.String(100), unique=True)
+    ingredients = db.relationship('Ingredient', backref='ingredients', lazy='dynamic')
     #macro = List
     #micro = List
     #picture = image
