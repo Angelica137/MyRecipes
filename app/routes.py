@@ -1,7 +1,7 @@
 from app import app, db
 from flask import render_template, flash, redirect, url_for
 from app.forms import SignUpForm, LoginForm, RecipeForm
-from app.models import User, Recipe
+from app.models import User, Recipe, Tag
 from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -66,3 +66,9 @@ def add_recipe():
         flash('Your recipe has been saved')
         return redirect(url_for('home'))
     return render_template('add_recipe.html', title='Add your awesome recipe here', form=form)
+
+
+@app.route('/<slug>')
+def recipe(slug):
+    recipe = Recipe.query.filter(Recipe.slug == slug).first_or_404()
+    return render_template('recipe.html', recipe=recipe)

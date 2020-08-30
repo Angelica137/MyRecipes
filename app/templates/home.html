@@ -3,9 +3,11 @@
 {% for recipe in recipes %}
 <div>
   <p>
-    {{ recipe.name }}<br />
-    <b>{{ recipe.description }}</b><br />
-    time: {{ recipe.cook_time }}min {{ recipe.calories }}250 cal
+    <a href="{{ url_for('recipe', slug=recipe.slug) }}"
+      >{{ recipe.name }}<br />
+      <b>{{ recipe.description }}</b><br />
+      time: {{ recipe.cook_time }}min {{ recipe.calories }}250 cal
+    </a>
   </p>
 </div>
 {% endfor %}
