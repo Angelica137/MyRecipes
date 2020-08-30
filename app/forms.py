@@ -22,9 +22,6 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 
-
-
-
     
 class TagField(wtforms.StringField):
     def _value(self):
@@ -77,3 +74,31 @@ class RecipeForm(FlaskForm):
         self.populate_obj(recipe)
         recipe.generate_slug()
         return recipe
+
+
+class FoodForm(FlaskForm):
+    name = StringField('Name')
+
+    def get_tags_from_string(self, tag_string):
+        '''
+        Query the database and retrieve any food we have already saved
+        '''
+        existing_food = Food.query.filter(Food.name.in_(food_names))
+        '''
+        Determine which food names are new
+        '''
+        new_names = set(food_names) - set([food.name for food in existing_foods])
+        '''
+        Create a  list of unsaved Food instances for the new foods
+        '''
+        new_foods = [Food(name=name) for name in new_names]
+        '''
+        Return all the existing foods + all the new, unsaved foods
+        '''
+        return list(existing_foods) + new_foods
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = self.get_tags_from_string(valuelist[0])
+        else:
+            self.data = []
