@@ -12,6 +12,9 @@ def slugify(s):
 recipe_tags = db.Table('recipe_tags', db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')), db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id')))
 
 
+recipe_ingredients = db.Table('recipe_ingredients', db.Column('ingredient_id', db.Integer, db.ForeignKey('ingredient.id')), db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id')))
+
+
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
 
@@ -52,7 +55,7 @@ class Recipe(db.Model):
     tags = db.relationship('Tag', secondary=recipe_tags, backref=db.backref('recipes', lazy='dynamic'))
     # utensils = db.Column(db.String(150))
 		# picture = image
-    # ingredients = list
+    ingredients = db.relationship('Ingredient', secondary=recipe_ingredients, backref=db.backref('recipes', lazy='dynamic'))
     # instructions = List
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
