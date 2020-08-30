@@ -72,3 +72,8 @@ class RecipeForm(FlaskForm):
     servings = IntegerField('Number of servings')
     tags = TagField('Tags', description='Separate multiple tags with commas')
     submit = SubmitField('Add recipe')
+
+    def save_recipe(self, recipe):
+        self.populate_obj(recipe)
+        recipe.generate_slug()
+        return recipe
