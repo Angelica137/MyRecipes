@@ -1,6 +1,6 @@
 import wtforms
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, SubmitField, PasswordField, TextAreaField, IntegerField
+from wtforms import StringField, BooleanField, SubmitField, PasswordField, TextAreaField, IntegerField, FormField, RadioField, FloatField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User, Recipe, Tag, Ingredient
 
@@ -62,24 +62,10 @@ class TagField(wtforms.StringField):
             self.data = []
 
 
-class RecipeForm(FlaskForm):
-    name = StringField('Recipe name', validators=[DataRequired()])
-    description = TextAreaField('Decription')
-    cook_time = IntegerField('Cooking time')
-    servings = IntegerField('Number of servings')
-    tags = TagField('Tags', description='Separate multiple tags with commas')
-    submit = SubmitField('Add recipe')
-
-    def save_recipe(self, recipe):
-        self.populate_obj(recipe)
-        recipe.generate_slug()
-        return recipe
-
-
-class FoodForm(FlaskForm):
+class FoodField(wtforms.StringField):
     name = StringField('Name')
 
-    def get_tags_from_string(self, tag_string):
+    def get_food_from_string(self, tag_string):
         '''
         Query the database and retrieve any food we have already saved
         '''
@@ -99,6 +85,37 @@ class FoodForm(FlaskForm):
 
     def process_formdata(self, valuelist):
         if valuelist:
-            self.data = self.get_tags_from_string(valuelist[0])
+            self.data = self.get_food_from_string(valuelist[0])
         else:
             self.data = []
+
+
+class QuantityTypeForm(FlaskForm):
+    name = RadioField('unit', choices=['tbsp', 'tsp', 'grams', 'cup'])
+
+
+class QuantityForm(FlaskForm):
+    value = FloatField('amount')
+    type = FormField(QuantityTypeForm)
+
+
+class IngredientForm(FlaskForm):
+    food = FoodField('Ingredient', description='Ingredient')
+    quantity = FormField(QuantityForm)
+
+
+class RecipeForm(FlaskForm):
+    name = StringField('Recipe name', validators=[DataRequired()])
+    description = TextAreaField('Decription')
+    cook_time = IntegerField('Cooking time')
+    servings = IntegerField('Number of servings')
+    tags = TagField('Tags', description='Separate multiple tags with commas')
+    ingredient = FormField(IngredientForm)
+    submit = SubmitField('Add recipe')
+
+    def save_recipe(self, recipe):
+        self.populate_obj(recipe)
+        recipe.generate_slug()
+        return recipe
+
+
