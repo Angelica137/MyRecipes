@@ -1,6 +1,6 @@
 import wtforms
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, SubmitField, PasswordField, TextAreaField, IntegerField, FormField, RadioField, FloatField
+from wtforms import Form, FieldList, StringField, BooleanField, SubmitField, SelectField, PasswordField, TextAreaField, IntegerField, FormField, RadioField, FloatField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User, Recipe, Tag, Ingredient
 
@@ -91,7 +91,7 @@ class FoodField(wtforms.StringField):
 
 
 class QuantityTypeForm(FlaskForm):
-    name = RadioField('unit', choices=['tbsp', 'tsp', 'grams', 'cup'])
+    name = SelectField('choose unit', choices=['tbsp', 'tsp', 'grams', 'cup'])
 
 
 class QuantityForm(FlaskForm):
@@ -99,7 +99,7 @@ class QuantityForm(FlaskForm):
     type = FormField(QuantityTypeForm)
 
 
-class IngredientForm(FlaskForm):
+class IngredientForm(Form):
     food = FoodField('Ingredient', description='Ingredient')
     quantity = FormField(QuantityForm)
 
@@ -110,7 +110,7 @@ class RecipeForm(FlaskForm):
     cook_time = IntegerField('Cooking time')
     servings = IntegerField('Number of servings')
     tags = TagField('Tags', description='Separate multiple tags with commas')
-    ingredient = FormField(IngredientForm)
+    ingredient = FieldList(FormField(IngredientForm), min_entries=1, max_entries=20)
     submit = SubmitField('Add recipe')
 
     def save_recipe(self, recipe):
